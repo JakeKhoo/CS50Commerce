@@ -6,19 +6,19 @@ Created a functioning online marketplace like ebay using Django, javascript, Pyt
 
 **Create Listing:**
 
--Users can create their listing by entirng a title, a description and what the starting bid should be
+- Users can create their listing by entirng a title, a description and what the starting bid should be
 
 **Active Listings:**
 
--Lets user view all active auction listings with a title, description, photo and current bid
+- Lets user view all active auction listings with a title, description, photo and current bid
 
 **Watchlist:**
 
--Displays all the listings that a user has added to their watchlist
+- Displays all the listings that a user has added to their watchlist
 
 **Categories:**
 
--Listings sorted by specific categories
+- Listings sorted by specific categories
 
 **Images:**
 
