@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %} {% block body %}
+<h2>{{name}}</h2>
+{% for listing in set %} {% if listing.winningUser is None%}
+<div class="card mb-3" style="width: 85%; height: 200px; flex-direction: row">
+  <img
+    src="{{listing.image}}"
+    alt="hi"
+    style="width: 30%; height: 200px; object-fit: contain"
+  />
+  <div class="card-body">
+    <h4>{{listing.title}}</h4>
+    {% if listing.current_bid is None %}
+    <b>Price:</b> ${{listing.starting}} {% else %}
+    <b>Price:</b> ${{listing.current_bid.bid}} {% endif %}
+    <br />
+    Description: {{listing.description}}
+    <br />
+    Created on {{listing.datetime}}
+    <br />
+    <br />
+    <a href="{% url 'auction' id=listing.pk %}" class="btn btn-primary"
+      >View Listing</a
+    >
+  </div>
+</div>
+{% endif %} {% endfor %} {% endblock %}

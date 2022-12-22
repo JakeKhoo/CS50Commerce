@@ -1,0 +1,78 @@
+{% extends "auctions/layout.html" %} {% block body %}
+{% if messages %}
+<div class="messages", style = "color:red">
+    {% for message in messages %}
+    <h4{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+    {% endfor %}
+</div>
+{% endif %}
+{% if winner%}
+<h2 style = "color:green"> Congratulations, you won this listing <h2>
+  {%endif%}
+  {% if closed %}
+  <h2> This Listing is closed </h2>
+  {%endif%}
+<h2>Listing: {{listing.title}}</h2>
+<img
+  src="{{listing.image}}"
+  alt="No image"
+  style="max-height: 400px; object-fit: contain"
+/>
+<br />
+Description: {{listing.description}}
+<br />
+<br />
+{% if winner or closed %}
+Price: ${{listing.current_bid.bid}}
+{%else%}
+<h4>    {% if listing.current_bid is None %}
+    ${{listing.starting}} {% else %}
+    ${{listing.current_bid.bid}} {% endif %}</h4>
+There have been {{num_bids}} bids so far{% if username%}, you have the highest bid{% endif %}
+<br />
+{% if seller %}
+<br />
+<a href="{% url 'close' id=listing.pk %}" class="btn btn-primary"
+>Close Bid</a
+>
+<br />
+{% else %}
+<form action="{% url 'auction' id=listing.pk %}" method="post">
+    {% csrf_token %} 
+    <h5>Bid:</h5>
+    {{BiddingForm.bid}}
+   </br>
+  </br>
+    <input class="btn btn-primary" type="submit" value="Submit Bid" />
+  </form>
+{% endif %}
+{% endif %} 
+<br />
+<a href="{% url 'add_watchlist' listing=listing.pk %}" class="btn btn-primary"
+>Add to watchlist</a
+>
+<a href="{% url 'remove_watchlist' listing=listing.pk %}" class="btn btn-primary"
+>Remove from watchlist</a
+>
+<h2>Comments</h2>
+{% for comment in comments %} 
+<div class="card mb-3" style="width: 85%; height: 100px; flex-direction: row">
+  <div class="card-body">
+    <h4>{{comment.user}}</h4>
+    Comment: {{comment.comment}}
+    <br />
+   
+  </div>
+</div>
+{% endfor %} 
+
+<form action="{% url 'auction' id=listing.pk %}" method="post">
+  {% csrf_token %} 
+  <h5>Create Comment:</h5>
+  {{CommentForm.comment}}
+ </br>
+</br>
+  <input class="btn btn-primary" type="submit" value="Submit Comment" />
+</form>
+
+{% endblock %}
